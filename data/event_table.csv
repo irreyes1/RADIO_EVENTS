@@ -1,0 +1,9 @@
+Evento,Propósito principal,Condiciones,Tipo de comparación,Uso típico
+A1,Servidora vuelve "buena",serving > umbral,Absoluta,Finalizar mediciones inter o IRAT
+A2,Servidora se vuelve "mala",serving < umbral,Absoluta,Activar mediciones inter-freq o IRAT
+A3,Vecina mejor que servidora,neighbor > serving + offset,Relativa,Handover intra-frecuencia
+A4,Vecina supera nivel fijo,neighbor > umbral,Absoluta,Medición de nuevas vecinas o SCells
+A5,Servidora cae + vecina mejora,serving < Th1 & neighbor > Th2,Doble,Handover inter-freq o IRAT
+A6,Vecina mejor en misma RAT/capa,neighbor > serving + offset,Relativa,Movilidad dual layer
+B1,Vecina IRAT supera umbral,IRAT neighbor > umbral,Absoluta,Preparar transición LTE/3G/5G
+B2,Servidora cae + IRAT vecina mejora,serving < Th1 & IRAT neighbor > Th2,Doble,Handover IRAT
