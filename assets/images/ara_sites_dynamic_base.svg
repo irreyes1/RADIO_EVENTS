@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600">
+  <defs>
+    <linearGradient id="mapBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fdfdfd" />
+      <stop offset="1" stop-color="#eef4fa" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M0 0H40V40" fill="none" stroke="#d4dceb" stroke-width="1" />
+      <path d="M0 20H40" fill="none" stroke="#eef2f9" stroke-width="1" />
+      <path d="M20 0V40" fill="none" stroke="#eef2f9" stroke-width="1" />
+    </pattern>
+    <linearGradient id="route" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1a4f9c" />
+      <stop offset="1" stop-color="#f4b942" />
+    </linearGradient>
+  </defs>
+  <rect width="960" height="600" fill="url(#mapBg)" />
+  <rect x="0" y="0" width="960" height="600" fill="url(#grid)" opacity="0.3" />
+  <g font-family="'Inter', 'Segoe UI', sans-serif" font-size="18" fill="#203047" font-weight="600">
+    <text x="80" y="60">Basílica del Pilar</text>
+    <text x="640" y="180">Parque Bruil</text>
+    <text x="420" y="520">Río Ebro</text>
+  </g>
+  <g stroke="#203047" stroke-width="1.5" fill="none" opacity="0.45">
+    <path d="M120 120 L340 150 L460 120 L620 180 L760 160" />
+    <path d="M120 160 L280 220 L420 210 L540 260 L720 240" />
+    <path d="M100 260 L260 300 L400 340 L580 320 L780 340" />
+  </g>
+  <g id="sites">
+    <g transform="translate(220 170)">
+      <circle r="64" fill="rgba(30, 80, 150, 0.12)" />
+      <circle r="36" fill="#1a4f9c" fill-opacity="0.7" stroke="#113468" stroke-width="3" />
+      <text y="62" fill="#1a4f9c" font-size="20" font-weight="700" text-anchor="middle">ARA0319</text>
+      <g fill="#1a4f9c" fill-opacity="0.85" transform="rotate(-12)">
+        <polygon points="0,-10 80,-40 0,-70" />
+        <polygon points="0,-10 -70,-20 0,-70" />
+        <polygon points="0,-10 10,70 80,-40" />
+      </g>
+    </g>
+    <g transform="translate(720 260)">
+      <circle r="64" fill="rgba(244, 185, 66, 0.18)" />
+      <circle r="36" fill="#f4b942" fill-opacity="0.8" stroke="#c58c21" stroke-width="3" />
+      <text y="62" fill="#f4b942" font-size="20" font-weight="700" text-anchor="middle">ARA0022</text>
+      <g fill="#f17732" fill-opacity="0.85" transform="rotate(18)">
+        <polygon points="0,-10 80,-40 0,-70" />
+        <polygon points="0,-10 -70,-20 0,-70" />
+        <polygon points="0,-10 10,70 80,-40" />
+      </g>
+    </g>
+  </g>
+  <g id="routePath" fill="none" stroke="url(#route)" stroke-width="6" stroke-linecap="round" stroke-dasharray="10 12">
+    <path d="M240 190 C 320 220, 440 220, 520 260 C 600 300, 660 300, 720 260" />
+  </g>
+  <g id="zoneLabels" font-family="'Inter', 'Segoe UI', sans-serif" font-size="16" fill="#1f7a50" font-weight="600">
+    <text x="250" y="120">Good coverage</text>
+    <text x="350" y="320" fill="#f17732">Outer search zone</text>
+    <text x="640" y="340" fill="#d64545">Critical coverage</text>
+  </g>
+</svg>

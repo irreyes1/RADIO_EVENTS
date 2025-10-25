@@ -3,28 +3,129 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Simulador Pedagógico de Traspaso de Celdas - IRREYES_HANDOVER_SIM</title>
+  <title>Simulador Pedagógico de Traspaso de Celdas</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Simulador Pedagógico de Traspaso de Celdas</h1>
-  <div id="map-container">
-    <canvas id="handoverCanvas"></canvas>
-  </div>
+  <header>
+    <div class="header-content">
+      <h1>Simulador Pedagógico de Traspaso de Celdas</h1>
+      <p>
+        Visualiza el trayecto de un usuario desde la estación <strong>ARA0319</strong> hacia la
+        estación <strong>ARA0022</strong>, comprendiendo las zonas de "good coverage" y los límites donde
+        se desencadenan mediciones y handovers.
+      </p>
+    </div>
+  </header>
 
-  <div id="formula">
-    <h3>Fórmula del evento A3</h3>
-    <textarea rows="4" cols="90">
-RSRP_target - RSRP_source >
-ReportConfigEUtraBestCell.a3offset/10 +
-EUtranFreqRelation.a3RsrpFreqOffsetAdjustment/10 +
-EUtranFreqRelation.eUtranFreqToQciProfileRelation<qci>.a3RsrpFreqQciOffsetAdjustment/10 +
-ReportConfigEUtraBestCell.hysteresisA3/10 -
-EUtranCellRelation.cellIndividualOffsetEUtran
-    </textarea>
-  </div>
+  <main>
+    <section class="visualization" aria-labelledby="visualization-title">
+      <h2 id="visualization-title" class="section-title">Escenarios de cobertura y ajuste de evento A3</h2>
+      <div class="visualization-grid">
+        <figure class="panel coverage-panel">
+          <img src="assets/images/ara_coverage_circles.svg" alt="Esquema concéntrico de zonas de cobertura con eventos A1 y A2" loading="lazy">
+          <figcaption>Zonas de cobertura teóricas por umbrales A1 y A2.</figcaption>
+        </figure>
+        <div class="panel map-panel">
+          <div class="map-wrapper">
+            <img src="assets/images/ara_sites_dynamic_base.svg" alt="Mapa estilizado de las estaciones ARA0319 y ARA0022 y su corredor" loading="lazy">
+            <canvas id="handoverCanvas" width="960" height="600" aria-hidden="true"></canvas>
+          </div>
+          <div class="progress-control">
+            <label for="userProgress" class="slider-label">
+              Progreso del trayecto: <output id="progressValue" for="userProgress">0%</output>
+            </label>
+            <input type="range" id="userProgress" min="0" max="100" value="0">
+          </div>
+        </div>
+        <section class="panel formula-panel" aria-labelledby="formula-title">
+          <h3 id="formula-title">Configuración de la condición A3</h3>
+          <p>
+            Ajusta los parámetros para la expresión de activación de reportes A3. Los offsets se expresan en décimas de dB y las
+            medidas RSRP en dBm.
+          </p>
+          <form id="a3-form">
+            <div class="form-grid">
+              <label>
+                RSRP<sub>target</sub> (dBm)
+                <input type="number" id="rsrpTarget" value="-92" step="0.1">
+              </label>
+              <label>
+                RSRP<sub>source</sub> (dBm)
+                <input type="number" id="rsrpSource" value="-105" step="0.1">
+              </label>
+              <label>
+                ReportConfigEUtraBestCell.a3offset
+                <input type="number" id="a3offset" value="30" step="1">
+              </label>
+              <label>
+                EUtranFreqRelation.a3RsrpFreqOffsetAdjustment
+                <input type="number" id="freqOffset" value="0" step="1">
+              </label>
+              <label>
+                EUtranFreqRelation.eUtranFreqToQciProfileRelation&lt;qci&gt;.a3RsrpFreqQciOffsetAdjustment
+                <input type="number" id="qciOffset" value="0" step="1">
+              </label>
+              <label>
+                ReportConfigEUtraBestCell.hysteresisA3
+                <input type="number" id="hysteresis" value="20" step="1">
+              </label>
+              <label>
+                EUtranCellRelation.cellIndividualOffsetEUtran
+                <input type="number" id="cellOffset" value="0" step="0.1">
+              </label>
+            </div>
+          </form>
+          <div class="formula-result">
+            <code>RSRP<sub>target</sub> - RSRP<sub>source</sub> &gt; ReportConfigEUtraBestCell.a3offset/10 + EUtranFreqRelation.a3RsrpFreqOffsetAdjustment/10 + EUtranFreqRelation.eUtranFreqToQciProfileRelation&lt;qci&gt;.a3RsrpFreqQciOffsetAdjustment/10 + ReportConfigEUtraBestCell.hysteresisA3/10 - EUtranCellRelation.cellIndividualOffsetEUtran</code>
+            <p id="a3-evaluation">Resultado actual: pendiente de cálculo.</p>
+          </div>
+        </section>
+      </div>
+    </section>
 
-  <div id="table-container"></div>
+    <section class="simulation-section" aria-labelledby="simulation-title">
+      <h2 id="simulation-title">Simulación del trayecto</h2>
+      <div class="simulation-content">
+        <p>
+          Observa la evolución de la cobertura dominante a medida que el usuario avanza desde la estación <strong>ARA0319</strong> hacia
+          <strong>ARA0022</strong>. El indicador se actualiza dinámicamente con la mejor celda estimada y recomendaciones sobre las
+          acciones de medición.
+        </p>
+        <div class="status-panel" aria-live="polite">
+          <h3>Estado de cobertura estimado</h3>
+          <p id="coverageStatus">El usuario se encuentra en la zona de máxima cobertura de la estación ARA0319.</p>
+          <ul id="coverageDetails"></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="table-section" aria-labelledby="table-title">
+      <h2 id="table-title">Tabla de eventos de referencia</h2>
+      <div class="table-wrapper">
+        <table id="eventsTable">
+          <thead>
+            <tr>
+              <th>Evento</th>
+              <th>Propósito principal</th>
+              <th>Condiciones</th>
+              <th>Tipo de comparación</th>
+              <th>Uso típico</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="5" class="loading">Cargando datos de eventos...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Versión inicial de la herramienta docente con recursos esquemáticos de cobertura y trayecto.</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
