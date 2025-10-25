@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 540">
+  <defs>
+    <radialGradient id="coverage" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#f2f8ff" />
+      <stop offset="100%" stop-color="#dbe9ff" />
+    </radialGradient>
+    <linearGradient id="background" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#f9fbff" />
+      <stop offset="100%" stop-color="#c8d8ff" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="900" height="540" fill="url(#background)" />
+  <g fill="none" stroke-width="3">
+    <circle cx="260" cy="300" r="180" stroke="#1a4f9c" opacity="0.25" />
+    <circle cx="260" cy="300" r="120" stroke="#1a4f9c" opacity="0.4" />
+    <circle cx="260" cy="300" r="60" stroke="#1a4f9c" opacity="0.8" />
+    <circle cx="640" cy="240" r="180" stroke="#1f7a50" opacity="0.25" />
+    <circle cx="640" cy="240" r="120" stroke="#1f7a50" opacity="0.4" />
+    <circle cx="640" cy="240" r="60" stroke="#1f7a50" opacity="0.8" />
+  </g>
+  <g stroke-width="4" stroke-linecap="round">
+    <path d="M260 300 L140 130" stroke="#1a4f9c" opacity="0.45" />
+    <path d="M260 300 L340 120" stroke="#1a4f9c" opacity="0.45" />
+    <path d="M260 300 L420 320" stroke="#1a4f9c" opacity="0.45" />
+    <path d="M640 240 L520 100" stroke="#1f7a50" opacity="0.45" />
+    <path d="M640 240 L760 100" stroke="#1f7a50" opacity="0.45" />
+    <path d="M640 240 L760 380" stroke="#1f7a50" opacity="0.45" />
+  </g>
+  <rect x="430" y="140" width="60" height="260" fill="#ffefba" opacity="0.6" rx="16" />
+  <text x="210" y="510" font-size="28" fill="#1a4f9c" font-weight="bold">Estación ARA0319</text>
+  <text x="570" y="90" font-size="28" fill="#1f7a50" font-weight="bold">Estación ARA0022</text>
+  <text x="448" y="280" font-size="18" fill="#a46700" transform="rotate(-90 448 280)">Corredor de Trayecto</text>
+</svg>
